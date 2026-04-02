@@ -1502,6 +1502,7 @@
             .social-item span {
                 font-size: 0.7rem;
             }
+
             .footer {
                 padding: 1rem 0;
                 margin-top: 1.5rem;
@@ -1511,18 +1512,43 @@
                 font-size: 0.75rem;
             }
 
-            /* Mega Lite optimizations for lower end devices */
+            /* Mega Lite optimizations & Full Hover Sticky Fix for Mobile */
             .portrait:hover,
             .service-card:hover,
             .project-card:hover,
             .social-item:hover,
-            .method:hover {
+            .method:hover,
+            .btn:hover {
                 transform: none !important;
                 box-shadow: none !important;
+                /* Disable color changes that 'stick' on touchscreens */
+                background: unset !important;
+                border-color: unset !important;
+                color: unset !important;
+                background-color: revert !important;
+            }
+
+            .btn.secondary:hover {
+                background: var(--surface) !important;
+                color: var(--text) !important;
+                border-color: var(--line) !important;
+            }
+
+            .btn.outline:hover {
+                background: transparent !important;
+                color: var(--accent) !important;
+                border-color: var(--accent) !important;
+            }
+
+            /* Prevent primary button from looking stuck/active */
+            .btn.primary:hover {
+                background: var(--accent) !important;
+                color: var(--accent-ink) !important;
             }
 
             .section {
-                contain: layout; /* Replaced paint with layout to prevent tooltip clipping */
+                contain: layout;
+                /* Replaced paint with layout to prevent tooltip clipping */
             }
         }
 
