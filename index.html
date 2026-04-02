@@ -174,15 +174,13 @@
         }
 
         body:before {
-            inset: -18%;
+            inset: -15%;
             z-index: -4;
-            background:
-                radial-gradient(circle at var(--px, 35%) var(--py, 35%), var(--l1) 0%, transparent 45%),
-                radial-gradient(circle at calc(100% - var(--px, 53%)) calc(100% - var(--py, 42%)), var(--l2) 0%, transparent 42%);
-            animation: drift 30s ease-in-out infinite alternate;
+            background: linear-gradient(135deg, var(--l1) 0%, transparent 100%), 
+                        linear-gradient(45deg, var(--l2) 0%, transparent 100%);
+            animation: drift 60s linear infinite alternate; /* Slower for CPU relief */
             transform: translate3d(0, 0, 0);
-            will-change: transform;
-            opacity: 0.6;
+            opacity: 0.4;
             contain: strict;
         }
 
@@ -264,10 +262,11 @@
         }
 
         .orb {
-            opacity: .72;
-            animation: float 18s ease-in-out infinite;
+            opacity: .4; /* Lower opacity for CPU blend speed */
+            animation: float 25s ease-in-out infinite;
             pointer-events: none;
             display: block;
+            contain: strict;
         }
 
         @media (max-width: 1024px) {
@@ -348,8 +347,7 @@
             border: 1px solid var(--line);
             border-radius: 999px;
             background: var(--nav);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            /* Removed blur() for CPU systems; looks clean but runs 2x faster */
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
             transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, background 0.3s ease
         }
@@ -584,13 +582,14 @@
             font-weight: 700;
             font-size: 0.95rem;
             border: 1px solid transparent;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
         }
 
         .btn.primary {
             background: var(--accent);
             color: var(--accent-ink);
-            box-shadow: 0 12px 24px rgba(22, 88, 68, .15)
+            box-shadow: 0 12px 24px rgba(22, 88, 68, .15);
         }
 
         .btn.primary:hover {
@@ -668,7 +667,8 @@
             aspect-ratio: 1;
             border-radius: 1.75rem;
             overflow: hidden;
-            background: var(--bg2)
+            background: var(--bg2);
+            contain: strict;
         }
 
         .frame img {
@@ -756,7 +756,9 @@
             background: var(--surface);
             border: 1px solid var(--line);
             border-radius: 2rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1)
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            contain: content;/* GPU Isolate */
+            will-change: transform;
         }
 
         .service-card:hover {
@@ -1091,12 +1093,13 @@
             opacity: 0;
             transform: translate3d(0, 30px, 0);
             transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-            will-change: transform, opacity
+            will-change: transform, opacity;
+            contain: content;
         }
 
         .reveal.active {
             opacity: 1;
-            transform: translate3d(0, 0, 0)
+            transform: translate3d(0, 0, 0);
         }
 
         .d1 {
@@ -1349,6 +1352,7 @@
                 align-items: center;
                 text-align: center;
                 min-height: auto;
+                contain: content; /* Isolate rendering for mobile perf */
             }
 
             .service-card h3,
@@ -1357,7 +1361,6 @@
                 line-height: 1.2;
                 margin-bottom: 0.25rem;
                 min-height: 2.1rem;
-                /* Forces 2-line height for uniform look */
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1365,32 +1368,36 @@
 
             .service-card p,
             .project-content p {
-                font-size: 0.7rem;
-                line-height: 1.3;
+                font-size: 0.70rem;
+                line-height: 1.35;
                 margin-bottom: 0.5rem;
                 opacity: 0.9;
+                text-align: center;
             }
 
             .service-icon {
+                aspect-ratio: 1;
                 width: 2rem;
-                height: 2rem;
+                height: auto;
                 font-size: 1rem;
                 margin-bottom: 0.5rem;
+                border-radius: 0.6rem;
+                display: grid;
+                place-items: center;
             }
 
             .chips {
                 gap: 0.15rem;
                 justify-content: center;
                 flex-wrap: wrap;
-                /* Ensure multi-row wrapping */
             }
 
             .chips li {
                 font-size: 0.55rem;
                 padding: 0.15rem 0.35rem;
                 white-space: normal;
-                /* Allow text to wrap inside chip if needed */
                 line-height: 1.1;
+                border-radius: 0.4rem;
             }
 
             .project-links {
@@ -2102,7 +2109,7 @@
             const updateLoop = () => {
                 let needsUpdate = false;
 
-                // 1. Pointer Logic
+                // 1. Pointer Logic (Optimized for idle)
                 if (window.innerWidth >= 1024) {
                     const dx = state.targetX - state.x;
                     const dy = state.targetY - state.y;
@@ -2111,12 +2118,12 @@
                         state.x += dx * 0.08;
                         state.y += dy * 0.08;
 
-                        // More efficient variable setting
-                        const px = (state.x / state.winW) * 100;
-                        const py = (state.y / state.winH) * 100;
+                        // Tighter property setting
+                        const px = ((state.x / state.winW) * 100).toFixed(2);
+                        const py = ((state.y / state.winH) * 100).toFixed(2);
 
-                        document.body.style.setProperty('--px', `${px.toFixed(2)}%`);
-                        document.body.style.setProperty('--py', `${py.toFixed(2)}%`);
+                        document.body.style.setProperty('--px', `${px}%`);
+                        document.body.style.setProperty('--py', `${py}%`);
 
                         if (pointerGlow) {
                             pointerGlow.style.transform = `translate3d(${Math.round(state.x - 192)}px, ${Math.round(state.y - 192)}px, 0)`;
