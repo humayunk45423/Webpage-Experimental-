@@ -174,13 +174,17 @@
         }
 
         body:before {
-            inset: -15%;
+            inset: -18%;
             z-index: -4;
-            background: linear-gradient(135deg, var(--l1) 0%, transparent 100%), 
-                        linear-gradient(45deg, var(--l2) 0%, transparent 100%);
-            animation: drift 60s linear infinite alternate; /* Slower for CPU relief */
+            background:
+                radial-gradient(circle at var(--px, 35%) var(--py, 35%), var(--l1) 0%, transparent 45%),
+                radial-gradient(circle at calc(100% - var(--px, 53%)) calc(100% - var(--py, 42%)), var(--l2) 0%, transparent 42%),
+                radial-gradient(circle at 76% 18%, var(--l3), transparent 28%);
+            animation: drift 30s ease-in-out infinite alternate;
             transform: translate3d(0, 0, 0);
-            opacity: 0.4;
+            will-change: transform;
+            opacity: 0.65;
+            filter: blur(30px);
             contain: strict;
         }
 
@@ -262,11 +266,12 @@
         }
 
         .orb {
-            opacity: .4; /* Lower opacity for CPU blend speed */
-            animation: float 25s ease-in-out infinite;
+            opacity: .72;
+            animation: float 18s ease-in-out infinite;
             pointer-events: none;
             display: block;
             contain: strict;
+            will-change: transform;
         }
 
         @media (max-width: 1024px) {
@@ -304,13 +309,14 @@
         .pointer {
             width: 24rem;
             height: 24rem;
-            background: radial-gradient(circle, rgba(255, 255, 255, .15) 0%, rgba(255, 107, 0, .12) 40%, transparent 70%);
-            opacity: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, .24) 0%, var(--soft) 42%, transparent 70%);
+            opacity: 0.72;
             filter: blur(42px);
             transition: opacity 0.4s ease;
             pointer-events: none;
             left: 0;
-            top: 0
+            top: 0;
+            will-change: transform;
         }
 
         @media (max-width: 1024px) {
@@ -347,9 +353,11 @@
             border: 1px solid var(--line);
             border-radius: 999px;
             background: var(--nav);
-            /* Removed blur() for CPU systems; looks clean but runs 2x faster */
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, background 0.3s ease
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, background 0.3s ease;
+            will-change: transform;
         }
 
         @media (max-width: 1024px) {
@@ -539,9 +547,13 @@
             line-height: 1;
             letter-spacing: -0.05em;
             margin: 0 0 0.75rem;
-            font-weight: 800;
-            color: var(--text);
+            font-weight: 900; /* Bolder for impact */
+            color: #000; /* Forced Pure Black */
             transition: color 0.5s ease;
+        }
+
+        html[data-theme=dark] .hero-copy h1 {
+            color: #fff; /* Forced Pure White */
         }
 
         #typing {
@@ -601,7 +613,7 @@
         }
 
         .btn.secondary:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             background: var(--accent);
             color: var(--accent-ink);
             border-color: var(--accent);
@@ -919,7 +931,7 @@
         }
 
         .method:hover {
-            transform: translateY(-2px);
+            transform: translateY(-6px);
             border-color: var(--accent);
             box-shadow: var(--shadow2)
         }
@@ -1031,13 +1043,18 @@
             background: var(--surface);
             border: 1px solid var(--line);
             border-radius: 1.25rem;
-            transition: all 0.3s ease
+            transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1), background 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            z-index: 1;
+            will-change: transform;
         }
 
         .social-item:hover {
             border-color: var(--accent);
-            transform: translateY(-3px);
-            background: var(--surface2)
+            transform: translateY(-12px) !important;
+            background: var(--surface2);
+            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.15);
+            z-index: 10;
         }
 
         .social-item i {
@@ -1091,7 +1108,6 @@
             transform: translate3d(0, 30px, 0);
             transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
             will-change: transform, opacity;
-            contain: content;
         }
 
         .reveal.active {
