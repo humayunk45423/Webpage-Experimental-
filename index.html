@@ -54,20 +54,26 @@
     </script>
 
     <link rel="icon" type="image/png" href="https://i.postimg.cc/PJhCYJzg/Artboard_1logo_border_radious.png">
-    
+
     <!-- Ultra Performance: Resource Hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap&text=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%20%21%40%23%24%25%5E%26%2A%28%29-_%2B%3D%5B%5D%7B%7D%7C%3B%3A%27%22%2C.%3C%3E%3F%2F%5C" rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        as="style">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap&text=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%20%21%40%23%24%25%5E%26%2A%28%29-_%2B%3D%5B%5D%7B%7D%7C%3B%3A%27%22%2C.%3C%3E%3F%2F%5C"
+        rel="stylesheet" media="print" onload="this.media='all'">
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
     </noscript>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        media="print" onload="this.media='all'">
 
     <style>
         :root {
@@ -136,6 +142,7 @@
             user-select: none;
             -webkit-user-select: none;
             -webkit-user-drag: none;
+            text-rendering: optimizeSpeed;
         }
 
         html {
@@ -515,7 +522,7 @@
             padding: 4rem 0;
             scroll-margin-top: 4.5rem;
             content-visibility: auto;
-            contain-intrinsic-size: 0 500px;
+            contain-intrinsic-size: 1px 500px;
             contain: layout style;
         }
 
@@ -555,10 +562,10 @@
             line-height: 1;
             letter-spacing: -0.05em;
             margin: 0 0 0.75rem;
-            font-weight: 900; 
+            font-weight: 900;
             color: #000;
             transition: color 0.5s var(--bezier);
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
         }
 
         html[data-theme=dark] .hero-copy h1 {
@@ -840,13 +847,26 @@
         }
 
         .chips li {
-            font-size: 0.75rem;
+            font-size: 0.82rem;
             font-weight: 700;
-            padding: 0.35rem 0.75rem;
+            padding: 0.45rem 1rem;
             background: var(--bg2);
             border: 1px solid var(--line);
             border-radius: 999px;
-            color: var(--muted)
+            color: var(--text);
+            transition: all 0.3s var(--bezier);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .chips li:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(1.05);
+            background: var(--white);
+        }
+
+        html[data-theme=dark] .chips li:hover {
+            background: var(--nav);
         }
 
         .projects-grid {
@@ -1099,7 +1119,7 @@
             border-color: var(--accent);
             transform: translateY(-10px) scale(1.04);
             background: var(--surface2);
-            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.2), 0 0 20px var(--soft);
+            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.2), 0 0 20px var(--soft);
             z-index: 10;
         }
 
@@ -1126,6 +1146,9 @@
         .footer a:hover {
             color: var(--accent)
         }
+
+        .show-mobile { display: none; }
+        .hide-mobile { display: inline; }
 
         @keyframes drift {
             from {
@@ -1411,7 +1434,8 @@
                 align-items: center;
                 text-align: center;
                 min-height: auto;
-                contain: content; /* Isolate rendering for mobile perf */
+                contain: content;
+                /* Isolate rendering for mobile perf */
             }
 
             .service-card h3,
@@ -1453,12 +1477,15 @@
             }
 
             .chips li {
-                font-size: 0.55rem;
-                padding: 0.15rem 0.35rem;
-                white-space: normal;
+                font-size: 0.72rem;
+                padding: 0.35rem 0.75rem;
+                white-space: nowrap;
                 line-height: 1.1;
-                border-radius: 0.4rem;
+                border-radius: 999px;
             }
+
+            .hide-mobile { display: none; }
+            .show-mobile { display: inline; }
 
             .project-links {
                 gap: 0.35rem;
@@ -1677,7 +1704,7 @@
         </header>
 
         <main class="page-main">
-            <section class="section hero" id="about">
+            <section class="section hero" id="about" style="content-visibility: visible; contain: none;">
                 <div class="container hero-grid">
                     <div class="hero-copy reveal">
                         <h2>Assalamu Alaikum (Greetings)!</h2>
@@ -1729,7 +1756,7 @@
                 </div>
             </section>
 
-            <section class="section split-section" id="services">
+            <section class="section split-section" id="services" style="content-visibility: auto; contain-intrinsic-size: 1px 1000px;">
                 <div class="container">
                     <h2 class="section-title reveal">Services</h2>
                     <div class="services-grid" style="contain: layout;">
@@ -1740,7 +1767,6 @@
                             <ul class="chips">
                                 <li>Logo design</li>
                                 <li>Banner design</li>
-                                <li>Poster design</li>
                                 <li>Business cards</li>
                                 <li>Social ads</li>
                             </ul>
@@ -1752,7 +1778,7 @@
                             <ul class="chips">
                                 <li>C and C++</li>
                                 <li>Python</li>
-                                <li>HTML, CSS, JavaScript</li>
+                                <li>HTML, CSS, <span class="hide-mobile">JavaScript</span><span class="show-mobile">JS</span></li>
                                 <li>VBS for Windows</li>
                             </ul>
                         </article>
@@ -1775,7 +1801,7 @@
                                 <li>3D modeling</li>
                                 <li>Rendering</li>
                                 <li>Lighting</li>
-                                <li>Architectural visuals</li>
+                                <li><span class="hide-mobile">Architectural visuals</span><span class="show-mobile">Arch Viz</span></li>
                             </ul>
                         </article>
                         <article class="service-card reveal d1">
@@ -1783,10 +1809,10 @@
                             <h3>PC Software & Hardware</h3>
                             <p>Hands-on setup, diagnostics, optimization, and maintenance across devices.</p>
                             <ul class="chips">
-                                <li>Hardware diagnostics</li>
+                                <li><span class="hide-mobile">Hardware diagnostics</span><span class="show-mobile">Diagnostics</span></li>
                                 <li>BIOS and thermals</li>
                                 <li>OS installs</li>
-                                <li>Custom ROM flashing</li>
+                                <li><span class="hide-mobile">Custom ROM flashing</span><span class="show-mobile">ROM Flashing</span></li>
                             </ul>
                         </article>
                         <article class="service-card reveal d2">
@@ -1794,7 +1820,7 @@
                             <h3>Electronics & DIY</h3>
                             <p>Practical builds using core electronics knowledge and reliable component testing.</p>
                             <ul class="chips">
-                                <li>Breadboard prototyping</li>
+                                <li><span class="hide-mobile">Breadboard prototyping</span><span class="show-mobile">Circuit Builds</span></li>
                                 <li>DC-DC systems</li>
                                 <li>Charging modules</li>
                                 <li>Basic soldering</li>
@@ -1804,7 +1830,7 @@
                 </div>
             </section>
 
-            <section class="section split-section" id="projects">
+            <section class="section split-section" id="projects" style="content-visibility: auto; contain-intrinsic-size: 1px 1200px;">
                 <div class="container">
                     <h2 class="section-title reveal">Projects</h2>
                     <div class="projects-grid" style="contain: layout style;">
@@ -1881,8 +1907,8 @@
                                         class="project-link">
                                         <span>Banner Design</span><i class="fa-solid fa-arrow-right"></i>
                                     </a>
-                                    <a href="https://i.postimg.cc/DfS3Wc9p/Mobile_Express_Business_Card.png" target="_blank"
-                                        class="project-link" decoding="async">
+                                    <a href="https://i.postimg.cc/DfS3Wc9p/Mobile_Express_Business_Card.png"
+                                        target="_blank" class="project-link" decoding="async">
                                         <span>Business Card</span><i class="fa-solid fa-arrow-right"></i>
                                     </a>
                                     <a href="https://i.postimg.cc/rmdZpfD0/Mobile_Express_Cash_Memo.png" target="_blank"
@@ -1973,7 +1999,9 @@
                                     aria-label="Chat on WhatsApp">
                                     <div class="method-icon">
                                         <svg viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M20 10C20 15.51 15.51 20 10 20C7.97 20 6.08 19.39 4.5 18.35L0.66 19.58L1.9 15.86C0.7 14.22 0 12.19 0 10C0 4.49 4.48 0 10 0L10 0C15.51 0 20 4.49 20 10ZM15.99 12.73C15.89 12.56 13.62 11.51 13.44 11.45C13.18 11.35 12.92 11.38 12.72 11.66C12.44 12.06 12.16 12.46 11.94 12.7C11.77 12.89 11.48 12.91 11.24 12.81C10.91 12.67 10.01 12.36 8.89 11.36C8.03 10.59 7.44 9.64 7.27 9.35C7.1 9.05 7.25 8.88 7.39 8.72C7.81 8.2 8.39 7.85 8.1 7.24C8.03 7.1 7.45 5.66 7.2 5.08C7 4.59 6.86 4.57 6.23 4.57C4.93 4.57 4.19 6.08 4.19 7.37C4.19 9.9 7.77 13.71 10.35 14.78C12.65 15.73 13.33 15.64 13.86 15.53C14.62 15.37 15.58 14.8 15.82 14.12C16.06 13.44 16.06 12.86 15.99 12.73Z"></path>
+                                            <path fill-rule="evenodd"
+                                                d="M20 10C20 15.51 15.51 20 10 20C7.97 20 6.08 19.39 4.5 18.35L0.66 19.58L1.9 15.86C0.7 14.22 0 12.19 0 10C0 4.49 4.48 0 10 0L10 0C15.51 0 20 4.49 20 10ZM15.99 12.73C15.89 12.56 13.62 11.51 13.44 11.45C13.18 11.35 12.92 11.38 12.72 11.66C12.44 12.06 12.16 12.46 11.94 12.7C11.77 12.89 11.48 12.91 11.24 12.81C10.91 12.67 10.01 12.36 8.89 11.36C8.03 10.59 7.44 9.64 7.27 9.35C7.1 9.05 7.25 8.88 7.39 8.72C7.81 8.2 8.39 7.85 8.1 7.24C8.03 7.1 7.45 5.66 7.2 5.08C7 4.59 6.86 4.57 6.23 4.57C4.93 4.57 4.19 6.08 4.19 7.37C4.19 9.9 7.77 13.71 10.35 14.78C12.65 15.73 13.33 15.64 13.86 15.53C14.62 15.37 15.58 14.8 15.82 14.12C16.06 13.44 16.06 12.86 15.99 12.73Z">
+                                            </path>
                                         </svg>
                                     </div>
                                     <div class="method-text">
